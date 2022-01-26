@@ -13,7 +13,9 @@ namespace API1.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        [HttpGet("list")][Authorize(Policy ="read")]
+        [HttpGet("list")]
+        //[Authorize(Policy = "read")]
+        [Authorize]
         public IActionResult GetProducts()
         {
             var model = new List<ProductDto>

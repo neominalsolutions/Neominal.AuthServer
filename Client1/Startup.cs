@@ -13,6 +13,7 @@ namespace Client1
 {
     public class Startup
     {
+        // IdentityModel Package OpenId Connect ve Auth2.0 client library
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +25,17 @@ namespace Client1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpClient("IdentityServer", opt => {
+
+                opt.BaseAddress = new Uri(Configuration["ApiUrls:IdentityServer"]);
+                opt.DefaultRequestHeaders.Add("User-Agent", "Client1");
+            });
+
+            services.AddHttpClient("ResourceApi1", opt =>
+            {
+                opt.BaseAddress = new Uri(Configuration["ApiUrls:ResourceApi1"]);
+                opt.DefaultRequestHeaders.Add("User-Agent", "Client1");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
