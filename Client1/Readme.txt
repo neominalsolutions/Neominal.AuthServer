@@ -1,0 +1,1 @@
+﻿Client uygulamalar Authorization Server üzerinden Access Token alıp bu bilgileri Cookie Based olarak tutacakları için Open Id Connect paketini yüklememiz gerekir. Auth2.0 server-side taraftaki Hesapların yönetimi ve Access Token dağıtımından sorumludur.
