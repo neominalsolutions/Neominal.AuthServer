@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{E06EA82A-2D62-42FA-B788-818F83921297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client1", "Client1\Client1.csproj", "{EF763D22-058C-4CFE-A238-55453FE9779F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API1", "API1\API1.csproj", "{C4011396-A065-43C5-A46D-1646B6F5E8F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E06EA82A-2D62-42FA-B788-818F83921297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E06EA82A-2D62-42FA-B788-818F83921297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E06EA82A-2D62-42FA-B788-818F83921297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E06EA82A-2D62-42FA-B788-818F83921297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF763D22-058C-4CFE-A238-55453FE9779F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF763D22-058C-4CFE-A238-55453FE9779F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF763D22-058C-4CFE-A238-55453FE9779F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF763D22-058C-4CFE-A238-55453FE9779F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4011396-A065-43C5-A46D-1646B6F5E8F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4011396-A065-43C5-A46D-1646B6F5E8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4011396-A065-43C5-A46D-1646B6F5E8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4011396-A065-43C5-A46D-1646B6F5E8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A3D2648-B470-40FE-A7C0-D316F85D7D00}
+	EndGlobalSection
+EndGlobal
