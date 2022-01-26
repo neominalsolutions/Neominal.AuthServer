@@ -43,6 +43,8 @@ namespace IdentityServer
                 .AddInMemoryApiResources(AuthConfig.GetApiResources())
                 .AddInMemoryApiScopes(AuthConfig.GetApiScopes())
                 .AddInMemoryClients(AuthConfig.GetClients())
+                .AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
+                .AddTestUsers(AuthConfig.GetUsers().ToList())
                 //.AddSigningCredential() // production çýkarken ise bu Credential kullanacaðýz. Azure Amazon vs üzerinde tutulabilir.
                 // uygulamayý nerede host ediyorsak bu bilgileri oradan almasý gerekiyor.
                 .AddDeveloperSigningCredential(); // Development ortamýnda kullanacaðým public key ve private key oluþturur. Uygulama derlenince oluþacak olan bir key

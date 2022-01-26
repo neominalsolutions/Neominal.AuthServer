@@ -1,13 +1,20 @@
 ﻿using IdentityServer4.Models;
+using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer.Auth
 {
     // POST isteği Body Token introspection endpoint request
     // 200 dönerse token active yada pasif mi bilgilerini verir yetkimiz yoksa 401 döndürür.
+    // https://developer.okta.com/blog/2017/07/25/oidc-primer-part-1 profile claims
+
+    // iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/IdentityServer/IdentityServer4.Quickstart.UI/main/getmain.ps1'))
+    // yukarıdaki kodu powershell ile çalıştırarak otomatik olarak templatelere sahip oluyoruz.
+
 
     public static class AuthConfig
     {
@@ -44,5 +51,52 @@ namespace IdentityServer.Auth
             } };
         }
 
+        /// <summary>
+        /// Token içerisinde user ile ilgili hangi dataları tutacağımızı ayalarız. Identity ait resourceslar.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource> {
+                new  IdentityResources.OpenId(), // Tokenın hangi kullanıcı tarafından tüketildiğine dair subject Id bilgisi tutar. Üyelik mekanizması devreye girdiği andan itibareten üretilen access token hangi kimliğe sahip olduğununu bu OpenId sayesinde uniqueleştiririz.Bu alanın gönderilmesi zorunludur. Token içerisinde tutulacak SubId yani SubjectId karşılık gelir.
+                // required scope
+                new IdentityResources.Profile(), // Kullanıcı isim soyisim vs kullanıcıya ait profil bilgilerini alacağız. Idnetity serverdan gelen Ön tanımlı resource'lar.
+
+                };
+        }
+
+        /// <summary>
+        /// Uygulamamızı kullancak test user bilgileri
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<TestUser> GetUsers()
+        {
+            return new  List<TestUser>{
+                new TestUser
+                {
+                    Password = "password1",
+                    Username = "mert.alptekin",
+                    SubjectId = "dbb05323-f54d-477e-a243-50a7be8ca109",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("name","mert@test.com"),
+                        new Claim("given_name","Mert Alptekin"),
+                        new Claim("email","test@test.com")
+                    }
+                },
+                 new TestUser
+                {
+                    Password = "password1",
+                    Username = "cagatay.yildiz",
+                    SubjectId = "215a3220-65cb-43fd-8c9a-c18743b6fe37",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("name","cagatay@test.com"),
+                        new Claim("given_name","Çağatay Yıldız"),
+                        new Claim("email","cagatay@test.com")
+                    }
+                }
+            };
+        }
     }
 }
