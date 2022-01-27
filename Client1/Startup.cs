@@ -25,6 +25,21 @@ namespace Client1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultScheme = "MVCIdentityScheme"; // Uygulamaya Indentity Scheme dýþýnda default bir authentication þemasý veriyoruz.
+                opt.DefaultChallengeScheme = "IdentityServerScheme"; // IdentityServerScheme ile Identity þemasý üzerinden authenticate olduk.
+
+            }).AddCookie("MVCIdentityScheme").AddOpenIdConnect("IdentityServerScheme", opt =>
+            {
+
+                opt.SignInScheme = "MVCIdentityScheme"; // Identity server üzerinden kimliði doðrulanan kullanýcýnýn cookie bilgisi
+                opt.Authority = Configuration["ApiUrls:IdentityServer"];
+                opt.ClientId = "MvcClient1"; // Identity serverde client app için tanýmladýðýmýz isim
+                opt.ClientSecret = "x-secret"; // Identity serverde client için tanýmladýðýmýz key
+                opt.ResponseType = "code id_token"; // Identity serverdan istencek response type, authorization code va identity token doðru bir saðlayýcýdan bu kimlik bilgilerini aldýðýmýza dair ayar için kullanýyoruz. hibrit bir akýþ sunuyor.
+
+            });
             services.AddHttpClient("IdentityServer", opt => {
 
                 opt.BaseAddress = new Uri(Configuration["ApiUrls:IdentityServer"]);
@@ -55,7 +70,7 @@ namespace Client1
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

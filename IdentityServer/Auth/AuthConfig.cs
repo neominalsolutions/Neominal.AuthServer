@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,12 @@ namespace IdentityServer.Auth
             return new List<ApiResource> {
                 new ApiResource("api1", "API 1") // api1 Basic Auth için api username
                 {
-                    Scopes = { "api1.read" }, 
+                    Scopes = { "api1.read" },
                     ApiSecrets = new[]{new Secret("secretapi1".Sha256()) } // api secrets ise Basic Auth için password karşılık geliyor. introspection endpoint ile 
                     // elimizdeki token ilgili api için aktif mi değil mi kontrolerini yapacağız. ilgili token ilgili api için yetkisi var mı yok mu kontrolü yaparız.
                     // Basic Authorization client ile server arasında kimlik doğrulama yapmak için kullanılan eski bir kimlik doğrulama şekliydi. Auth2.0 protokolü öncesi yaygın bir şekilde kullanılıyordu.
                   
-                } 
+                }
             };
         }
 
@@ -39,7 +40,9 @@ namespace IdentityServer.Auth
 
         public static IEnumerable<Client> GetClients()
         {
-            return new List<Client> { new Client() {
+            return new List<Client> {
+
+                new Client {
                 ClientName = "client1 app",
                 ClientId = "client1",
                 ClientSecrets = new[] {
@@ -48,7 +51,23 @@ namespace IdentityServer.Auth
                 AllowedGrantTypes = GrantTypes.ClientCredentials, // Üyelik mekanizması yok
                 AllowedScopes = { "api1.read" } // api üzerinden hangi scope erişmeye izinlidir.
                 // scope tanımlaması yapınca identiy server otomatik olarak bu scopeların hangi api izinli olduğunu biliyor.
-            } };
+                },
+                new Client
+                {
+                    RequirePkce = false, // serverside uygulamalarda bu özelliği merkezi üyelik sistemi için yönetmemize gerek yoktur
+                    ClientName = "MvcClient1 App",
+                    ClientId="MvcClient1",
+                    ClientSecrets =  new[] {
+                    new Secret("x-secret".Sha256()) // şifrelenmiş HASH değeri HASH değeri ile kıyaslayacağız 
+                    },
+                    AllowedGrantTypes = GrantTypes.Hybrid, // code id_token istedeiğimiz için
+                    AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile 
+                    }, // resource owner hangi bilgilerine ulşamak istiyoruz
+                    RedirectUris = new List<string>{ "https://localhost:5004/signin-oidc" }
+                    // openId connect ile authenticate işlemi sonrasında client da ilgili sayfaya yönlenecek ve code id_token bilgilerini alabileceğiz.
+                }
+
+            };
         }
 
         /// <summary>
@@ -71,7 +90,7 @@ namespace IdentityServer.Auth
         /// <returns></returns>
         public static IEnumerable<TestUser> GetUsers()
         {
-            return new  List<TestUser>{
+            return new List<TestUser>{
                 new TestUser
                 {
                     Password = "password1",
