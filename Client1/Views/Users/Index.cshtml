@@ -2,6 +2,25 @@
 @{
     ViewData["Title"] = "Index";
 }
+@model AuthenticationViewModel
 
 <p>Bu sayfayı Identity Server üzerinden Login olan kullanıcılar görebilir</p>
 
+<p>Authenticate olan Kullanıcı Id @Model.AuthenticatedUserId</p>
+
+
+<h3>Claims (Kimliği doğrulanan kullanıcıya ait bilgiler)</h3>
+<ul>
+    @foreach (var item in Model.Claims)
+    {
+        <li>@item.Type : @item.Value</li>
+    }
+</ul>
+
+<h3>Properties (Identity Server üzerinden kimlik doğrulandıktan sonra okunan bilgiler)</h3>
+<ul>
+    @foreach (var item in Model.Properties)
+    {
+        <li>@item.Key : @item.Value</li>
+    }
+</ul>

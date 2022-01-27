@@ -38,6 +38,9 @@ namespace Client1
                 opt.ClientId = "MvcClient1"; // Identity serverde client app için tanýmladýðýmýz isim
                 opt.ClientSecret = "x-secret"; // Identity serverde client için tanýmladýðýmýz key
                 opt.ResponseType = "code id_token"; // Identity serverdan istencek response type, authorization code va identity token doðru bir saðlayýcýdan bu kimlik bilgilerini aldýðýmýza dair ayar için kullanýyoruz. hibrit bir akýþ sunuyor.
+                opt.GetClaimsFromUserInfoEndpoint = true; // otomatik olarak user-profile ile ilgili claim içerisibe gönmüþ olduk. Yoksa UserInfoEndpoint üzerinden Access token gönderirerek Identity Server üzerinden user profile bilgilerine ulaþabiliriz.
+                opt.SaveTokens = true; // uygulama scope access token ve refresh tokenlarý kaydetmek istersek bu özelliði true yaparýz.
+                // Default false olarak ayarlanmýþtýr.
 
             });
             services.AddHttpClient("IdentityServer", opt => {

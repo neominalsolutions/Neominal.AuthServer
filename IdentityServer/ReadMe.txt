@@ -16,3 +16,6 @@ Authorize Endpointine istek attığımızda belirli return typelar verebiliriz. 
 
 
 Proof Key for Code Exchange = Native clients (Mobile App, Akıllı saatlerde) veya SPA uygulamalarda kullanabilirsin. Bu tarz uygulamalar Client Secret değerini güvenli bir şekilde üzerinde tutamazlar.  Her bir istekde client_secret yerini tutacak code_challange ve code_verifier sayesinde güvenli bir şekilde identity server üzerinden bu istek gerçekleştirilebilir. Bu kodlar random bir şekilde oluşturuluyor. Client uygulaması random bir şekilde code_challange ve code_verifier oluşturur. Authorization Server istek yaparken bu code challange istek de taşınır. Authorization Server bu code_challange kendi üzerinde kaydeder ve client'a  auth token gönderir. Client bu sefer code_verifier ile birlikte authorization code gönderir. Auth server code_challenge ile code_verifier karşılaştırır eğer doğruysa access token alma endpointe gider. Merkezi bir üyelik sistemi kullanıyorsak bu yapıyı kullanmalıyız. (PKCE)
+
+
+Kullanıcı hakkındaki ekstra openid dışındaki bilgileri UserInfo endpint üzerinden edineceğiz. Veriler cookie'de tutulduğundan cookie şişirmemek adına sadece gerekli bilgiler cookie eklendi. client tarafında api ile ilgili bir izin scope verildiğinde id_token refresh_token ve access_token gibi bilgilere'de HttpContext Properties üzerinden erişebiliriz.
