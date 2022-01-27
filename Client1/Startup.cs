@@ -41,6 +41,8 @@ namespace Client1
                 opt.GetClaimsFromUserInfoEndpoint = true; // otomatik olarak user-profile ile ilgili claim içerisibe gönmüþ olduk. Yoksa UserInfoEndpoint üzerinden Access token gönderirerek Identity Server üzerinden user profile bilgilerine ulaþabiliriz.
                 opt.SaveTokens = true; // uygulama scope access token ve refresh tokenlarý kaydetmek istersek bu özelliði true yaparýz.
                 // Default false olarak ayarlanmýþtýr.
+                opt.Scope.Add("api1.read"); // api read izni ver. Client için tanýmlanmýþ yetkileri identity serverde allowedscope verirken buradan da client hangi izinlere (yetkilere) sahip olamasý istedeðini seçiyoruz.
+                opt.Scope.Add("offline_access"); // Refresh Token isteðini aktif hale getirdik.
 
             });
             services.AddHttpClient("IdentityServer", opt => {

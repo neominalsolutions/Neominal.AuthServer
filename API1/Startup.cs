@@ -43,7 +43,7 @@ namespace API1
             services.AddAuthorization(opt =>
             {
                 // yetkimiz yoksa 403 döner.
-                opt.AddPolicy("read", policy => policy.RequireClaim("scope","xxx"));
+                opt.AddPolicy("read", policy => policy.RequireClaim("scope","api1.read"));
             });
         }
 
