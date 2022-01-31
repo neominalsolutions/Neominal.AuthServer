@@ -1,9 +1,11 @@
 ﻿using Client1.Models;
 using Client1.Utils.EndPoints;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,8 @@ namespace Client1.Controllers
             _configuration = configuration;
             _logger = logger;
         }
+
+      
 
         public async Task<IActionResult> Index()
         {
