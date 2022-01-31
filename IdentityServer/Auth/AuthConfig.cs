@@ -63,15 +63,16 @@ namespace IdentityServer.Auth
                     PostLogoutRedirectUris = new List<string> { "https://localhost:5004/signout-callback-oidc" }, // Default bir redirect uri
                     AllowedGrantTypes = GrantTypes.Hybrid, // code id_token istedeiğimiz için
                     AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile
-                    ,"api1.read", IdentityServerConstants.StandardScopes.OfflineAccess}, // resource owner hangi bilgilerine ulşamak istiyoruz, scope olarak refresh token da ekledik. IdentityServerConstants.StandardScopes.OfflineAccess ile
+                    ,"api1.read", IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity"}, // resource owner hangi bilgilerine ulşamak istiyoruz, scope olarak refresh token da ekledik. IdentityServerConstants.StandardScopes.OfflineAccess ile
                     RedirectUris = new List<string>{ "https://localhost:5004/signin-oidc" },
                     AllowOfflineAccess = true, // Refresh Token mekanizmasını devreye soktuk
                     // openId connect ile authenticate işlemi sonrasında client da ilgili sayfaya yönlenecek ve code id_token bilgilerini alabileceğiz.
                    AccessTokenLifetime =(int)(DateTime.Now.AddHours(2)- DateTime.Now).TotalSeconds, // Default 1 saat
                    RefreshTokenUsage = TokenUsage.ReUse, // her istek de yeni bir refresh token oluşturmak için OneTime Only kullanabiliriz. 15 gün boyunca aynı refresh token kullanılacak taki refresh token expire olup yenisi alınana dek.
                    RefreshTokenExpiration = TokenExpiration.Absolute, // 15 gün içerisinde bir istek yapılırsa refresh token için ömürnü 15 gün daha uzatır
-                   AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(15) - DateTime.Now).TotalSeconds // Default olarak 30 gün 15 gün sonra expire oluyor. Expire olursa kullanıcı tekrar login olmak zorunda 
+                   AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(15) - DateTime.Now).TotalSeconds, // Default olarak 30 gün 15 gün sonra expire oluyor. Expire olursa kullanıcı tekrar login olmak zorunda 
                    // genelde RefreshTokenExpiration Sliding kaydırmalı olarak seçilir. 15 gündür default değeri. 15 gün içerisinde bir refresh token istedği geldiğinde ömrü o anki tarih itibari ile 15 gün daha uzar.
+                   RequireConsent = true // izin onay ekranını açtık
                 }
 
             };
@@ -87,7 +88,7 @@ namespace IdentityServer.Auth
                 new  IdentityResources.OpenId(), // Tokenın hangi kullanıcı tarafından tüketildiğine dair subject Id bilgisi tutar. Üyelik mekanizması devreye girdiği andan itibareten üretilen access token hangi kimliğe sahip olduğununu bu OpenId sayesinde uniqueleştiririz.Bu alanın gönderilmesi zorunludur. Token içerisinde tutulacak SubId yani SubjectId karşılık gelir.
                 // required scope
                 new IdentityResources.Profile(), // Kullanıcı isim soyisim vs kullanıcıya ait profil bilgilerini alacağız. Idnetity serverdan gelen Ön tanımlı resource'lar.
-
+                new IdentityResource(){ Name="CountryAndCity", Description="şehir ve ülke bilgisi", DisplayName="CountryAndCity" }
                 };
         }
 
@@ -107,7 +108,9 @@ namespace IdentityServer.Auth
                     {
                         new Claim("name","mert@test.com"),
                         new Claim("given_name","Mert Alptekin"),
-                        new Claim("email","test@test.com")
+                        new Claim("email","test@test.com"),
+                        new Claim("country","türkiye"),
+                        new Claim("city","istanbul")
                     }
                 },
                  new TestUser

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,6 +44,12 @@ namespace Client1
                 // Default false olarak ayarlanmýþtýr.
                 opt.Scope.Add("api1.read"); // api read izni ver. Client için tanýmlanmýþ yetkileri identity serverde allowedscope verirken buradan da client hangi izinlere (yetkilere) sahip olamasý istedeðini seçiyoruz.
                 opt.Scope.Add("offline_access"); // Refresh Token isteðini aktif hale getirdik.
+                opt.Scope.Add("city");
+                opt.Scope.Add("country");
+                // custom claim oluþturma iþlemi
+                // custom claimleri maplememiz lazým
+                opt.ClaimActions.MapUniqueJsonKey("country", "country");
+                opt.ClaimActions.MapUniqueJsonKey("city", "city");
 
             });
             services.AddHttpClient("IdentityServer", opt => {
