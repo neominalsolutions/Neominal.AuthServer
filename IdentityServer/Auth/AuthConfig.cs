@@ -63,7 +63,7 @@ namespace IdentityServer.Auth
                     PostLogoutRedirectUris = new List<string> { "https://localhost:5004/signout-callback-oidc" }, // Default bir redirect uri
                     AllowedGrantTypes = GrantTypes.Hybrid, // code id_token istedeiğimiz için
                     AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile
-                    ,"api1.read", IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity"}, // resource owner hangi bilgilerine ulşamak istiyoruz, scope olarak refresh token da ekledik. IdentityServerConstants.StandardScopes.OfflineAccess ile
+                    ,"api1.read", IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity","Roles"}, // resource owner hangi bilgilerine ulşamak istiyoruz, scope olarak refresh token da ekledik. IdentityServerConstants.StandardScopes.OfflineAccess ile
                     RedirectUris = new List<string>{ "https://localhost:5004/signin-oidc" },
                     AllowOfflineAccess = true, // Refresh Token mekanizmasını devreye soktuk
                     // openId connect ile authenticate işlemi sonrasında client da ilgili sayfaya yönlenecek ve code id_token bilgilerini alabileceğiz.
@@ -88,8 +88,10 @@ namespace IdentityServer.Auth
                 new  IdentityResources.OpenId(), // Tokenın hangi kullanıcı tarafından tüketildiğine dair subject Id bilgisi tutar. Üyelik mekanizması devreye girdiği andan itibareten üretilen access token hangi kimliğe sahip olduğununu bu OpenId sayesinde uniqueleştiririz.Bu alanın gönderilmesi zorunludur. Token içerisinde tutulacak SubId yani SubjectId karşılık gelir.
                 // required scope
                 new IdentityResources.Profile(), // Kullanıcı isim soyisim vs kullanıcıya ait profil bilgilerini alacağız. Idnetity serverdan gelen Ön tanımlı resource'lar.
-                new IdentityResource(){ Name="CountryAndCity", Description="şehir ve ülke bilgisi", DisplayName="CountryAndCity" }
+                new IdentityResource(){ Name="CountryAndCity", Description="şehir ve ülke bilgisi", DisplayName="CountryAndCity", UserClaims = {"country","city" } },
+                new IdentityResource() {Name  ="Roles", Description="User Role", UserClaims= {"role"} }
                 };
+            // Roles Idendity ResourceName Roles claim ismi ise role olarak işaretledik.
         }
 
         /// <summary>
@@ -110,7 +112,8 @@ namespace IdentityServer.Auth
                         new Claim("given_name","Mert Alptekin"),
                         new Claim("email","test@test.com"),
                         new Claim("country","türkiye"),
-                        new Claim("city","istanbul")
+                        new Claim("city","istanbul"),
+                        new Claim("role","admin")
                     }
                 },
                  new TestUser

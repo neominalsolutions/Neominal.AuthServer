@@ -44,13 +44,21 @@ namespace Client1
                 // Default false olarak ayarlanmýþtýr.
                 opt.Scope.Add("api1.read"); // api read izni ver. Client için tanýmlanmýþ yetkileri identity serverde allowedscope verirken buradan da client hangi izinlere (yetkilere) sahip olamasý istedeðini seçiyoruz.
                 opt.Scope.Add("offline_access"); // Refresh Token isteðini aktif hale getirdik.
-                opt.Scope.Add("city");
-                opt.Scope.Add("country");
+                opt.Scope.Add("CountryAndCity");
+                opt.Scope.Add("Roles"); // buraya Identity Resource ekliyoruz. User Claim deðil (userclaim :role)
                 // custom claim oluþturma iþlemi
                 // custom claimleri maplememiz lazým
                 // custom Resource Identity Tanýmý
                 opt.ClaimActions.MapUniqueJsonKey("country", "country");
                 opt.ClaimActions.MapUniqueJsonKey("city", "city");
+                opt.ClaimActions.MapUniqueJsonKey("role", "role"); // burada ise Identity Resource üzerinden user claim veriyoruz.
+
+
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    RoleClaimType = "role" // user-claim veriyoruz
+                };
+
 
             });
             services.AddHttpClient("IdentityServer", opt => {

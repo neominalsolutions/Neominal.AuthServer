@@ -44,6 +44,8 @@ namespace Client1.Controllers
         /// Refresh token bilgisini gönderip yeni bir access token almamızı sağlar.
         /// </summary>
         /// <returns></returns>
+        /// 
+        [Authorize(Roles ="manager")]
         public async Task<IActionResult> ChangeRefreshToken()
         {
             // identity server refresh token endpointi bulduk
