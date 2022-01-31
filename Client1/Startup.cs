@@ -48,6 +48,7 @@ namespace Client1
                 opt.Scope.Add("country");
                 // custom claim oluþturma iþlemi
                 // custom claimleri maplememiz lazým
+                // custom Resource Identity Tanýmý
                 opt.ClaimActions.MapUniqueJsonKey("country", "country");
                 opt.ClaimActions.MapUniqueJsonKey("city", "city");
 
