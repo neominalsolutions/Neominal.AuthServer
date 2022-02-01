@@ -22,14 +22,13 @@ namespace Client1.Controllers
         private readonly HttpClient _resourceApi1;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProductsController> _logger;
-        private readonly IHttpClientInterceptor _resourceApi1Interceptor;
-        public ProductsController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductsController> logger, IHttpClientInterceptor resouceApi1Interceptor)
+
+        public ProductsController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductsController> logger)
         {
             _identityServer = httpClientFactory.CreateClient("IdentityServer");
             _resourceApi1 = httpClientFactory.CreateClient("ResourceApi1");
             _configuration = configuration;
             _logger = logger;
-            _resourceApi1Interceptor = resouceApi1Interceptor;
         }
 
       

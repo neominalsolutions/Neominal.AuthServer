@@ -80,7 +80,6 @@ namespace Client1
                 opt.DefaultRequestHeaders.Add("User-Agent", "Client1");
             });
 
-            services.AddTransient<IHttpClientInterceptor, ResourceApiInterceptor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
