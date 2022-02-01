@@ -1,13 +1,18 @@
+using Client1.Services;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Client1
@@ -15,6 +20,7 @@ namespace Client1
     public class Startup
     {
         // IdentityModel Package OpenId Connect ve Auth2.0 client library
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +31,7 @@ namespace Client1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
             services.AddAuthentication(opt =>
             {
@@ -72,6 +79,8 @@ namespace Client1
                 opt.BaseAddress = new Uri(Configuration["ApiUrls:ResourceApi1"]);
                 opt.DefaultRequestHeaders.Add("User-Agent", "Client1");
             });
+
+            services.AddTransient<IHttpClientInterceptor, ResourceApiInterceptor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +102,8 @@ namespace Client1
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+    
 
             app.UseEndpoints(endpoints =>
             {

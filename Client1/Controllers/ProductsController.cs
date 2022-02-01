@@ -1,4 +1,6 @@
-﻿using Client1.Models;
+﻿
+using Client1.Models;
+using Client1.Services;
 using Client1.Utils.EndPoints;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
@@ -20,12 +22,14 @@ namespace Client1.Controllers
         private readonly HttpClient _resourceApi1;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProductsController> _logger;
-        public ProductsController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductsController> logger)
+        private readonly IHttpClientInterceptor _resourceApi1Interceptor;
+        public ProductsController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductsController> logger, IHttpClientInterceptor resouceApi1Interceptor)
         {
             _identityServer = httpClientFactory.CreateClient("IdentityServer");
             _resourceApi1 = httpClientFactory.CreateClient("ResourceApi1");
             _configuration = configuration;
             _logger = logger;
+            _resourceApi1Interceptor = resouceApi1Interceptor;
         }
 
       
@@ -82,12 +86,9 @@ namespace Client1.Controllers
 
         public async Task<IActionResult> List()
         {
-            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-            // cookie üzerinden access token alalım
-
-            _resourceApi1.SetBearerToken(accessToken);
-            // resourceapi1 access token header set ettik.
-
+            // httpContext üzerindeki Access Token bilgisini okuyup. bu access token bilgisini client set ettik. Extension ile
+            await _resourceApi1.SetAccessToken(HttpContext);
+            // http context üzerinden access token set etmek için kullandık.
             var response =  await _resourceApi1.GetAsync(ResourceApi1EndPoint.ProductUrl);
             // products endpointe istek attık
 
