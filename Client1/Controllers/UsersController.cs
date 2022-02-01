@@ -28,7 +28,7 @@ namespace Client1.Controllers
         public async Task<IActionResult> Index()
         {
            var result =  await HttpContext.AuthenticateAsync("IdentityServerScheme");
-
+            
             var model = new AuthenticationViewModel
             {
                 AuthenticatedUserId = User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value,

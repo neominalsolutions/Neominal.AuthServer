@@ -79,5 +79,30 @@ namespace Client1.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> List()
+        {
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+            // cookie üzerinden access token alalım
+
+            _resourceApi1.SetBearerToken(accessToken);
+            // resourceapi1 access token header set ettik.
+
+            var response =  await _resourceApi1.GetAsync(ResourceApi1EndPoint.ProductUrl);
+            // products endpointe istek attık
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                // isteği json formatında okuduk
+                var model = System.Text.Json.JsonSerializer.Deserialize<List<ProductViewModel>>(jsonString, new System.Text.Json.JsonSerializerOptions() { PropertyNameCaseInsensitive = true }); ;
+
+                return View(model);
+            }
+            
+
+            return Unauthorized();
+
+        }
     }
 }
