@@ -73,6 +73,24 @@ namespace IdentityServer.Auth
                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(15) - DateTime.Now).TotalSeconds, // Default olarak 30 gün 15 gün sonra expire oluyor. Expire olursa kullanıcı tekrar login olmak zorunda 
                    // genelde RefreshTokenExpiration Sliding kaydırmalı olarak seçilir. 15 gündür default değeri. 15 gün içerisinde bir refresh token istedği geldiğinde ömrü o anki tarih itibari ile 15 gün daha uzar.
                    RequireConsent = true // izin onay ekranını açtık
+                },
+                 new Client 
+                {
+                    ClientName = "Angular SPA Client1",
+                    ClientId="AngularClient1",
+                    RequireClientSecret = false, // JS uygulaması olduğu için
+                    PostLogoutRedirectUris = { "http://localhost:4200" },
+                    AllowedGrantTypes = GrantTypes.Code, // Authorization Code akışı
+                    AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile
+                    ,"api1.read", IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity","Roles"},
+                    RedirectUris = new List<string>{ "http://localhost:4200/callback" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
+                    AllowOfflineAccess = true,
+                   AccessTokenLifetime = 3600, 
+                   RefreshTokenUsage = TokenUsage.ReUse,
+                   RefreshTokenExpiration = TokenExpiration.Absolute, 
+                   AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(15) - DateTime.Now).TotalSeconds,
+                   RequireConsent = false 
                 }
 
             };

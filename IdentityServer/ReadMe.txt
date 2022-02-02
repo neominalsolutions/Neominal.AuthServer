@@ -19,3 +19,26 @@ Proof Key for Code Exchange = Native clients (Mobile App, Akıllı saatlerde) ve
 
 
 Kullanıcı hakkındaki ekstra openid dışındaki bilgileri UserInfo endpint üzerinden edineceğiz. Veriler cookie'de tutulduğundan cookie şişirmemek adına sadece gerekli bilgiler cookie eklendi. client tarafında api ile ilgili bir izin scope verildiğinde id_token refresh_token ve access_token gibi bilgilere'de HttpContext Properties üzerinden erişebiliriz.
+
+
+Custom bir user entegrasyonu için TestUserStore yerine kendi Repository'lerimizden kullanıcı işlemlerini yaparız. Account Controller içerisinde ilgili yerleri güncelleriz.
+
+IClientStore interface client bilgilerine erişmemizi sağlayan service
+
+IAuthenticationSchemeProvider authenticaation şemamız ile ilgili özelliklere erişmemizi sağlayan servis
+IEventService authentication işleminde event fırlatmamızı sağlayan servis
+IIdentityServerInteractionService identity server ile iletişime geçmemizi sağlayan servis. IdentityServer context giriş çıkış yap deny ver gibi işlemleri yapabiliriz.
+
+IProfile Service ile AddTestUsers yerine custom User Implementasyonunu Identity Server'a tanışmış oluyoruz.
+Kullanıcı Login olduğunda hangi claimler token içerisine eklenecek. Bunu yapmak için IProfileService diye bir interfaceden implemente ederek bu işlemleri yapacağız.
+
+Startup dosyasına AddProfileService olarak CustomProfile servisimizi ekliyoruz. Artık custom user claimler bu profile servis üzerinden oluşacaktır.
+
+AddRequestedClaims methodu ile Token içerisine ekleyeceğiz claimleri RequestedProfileContext'e verdik.
+IssuedClaims olarak da verirsek bu durumda UserInfo Endpointe gitmeden kullanıcıya ait claimleride Access Token içerisinde görüntülüyebiliriz. // json web token'a gömülür.
+// Best Practice açısında AddRequestedClaims kullanarak => UserInfo EndPointe istek atarak almaktır.
+
+
+Not: NameClaimType ile IdentityServer Startup dosyası üzerinden User.Identity.Name alanından name bilgisinin okunmasını sağlamış olduk.
+
+// angular odic client library ihtiyaç var
