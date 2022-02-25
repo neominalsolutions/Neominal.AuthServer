@@ -1,4 +1,6 @@
-﻿using API1.Dtos;
+﻿using API1.Attributes;
+using API1.Dtos;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +13,35 @@ namespace API1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ProductsController : ControllerBase
     {
+        
+
+
+        [HttpGet("test")]
+
+        //[TypeFilter(typeof(RoleClaimAttribute),
+        //    Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
+
+
+        [TypeFilter(typeof(RoleClaimCustomerInfoAttribute),
+            Arguments = new object[] { "ABCRequest", "ABCRequest" })]
+        public async Task<IActionResult> Test()
+        {
+           
+
+
+            return Ok();
+        }
+
+
+        [Authorize("CountryClaim")]
         [HttpGet("list")]
-        [Authorize(Policy = "read")]
-        //[Authorize]
         public IActionResult GetProducts()
         {
+           
+
             var model = new List<ProductDto>
             {
                 new ProductDto

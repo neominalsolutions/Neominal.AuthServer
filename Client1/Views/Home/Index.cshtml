@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Index";
 }
+@model AuthenticationViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<p>Authenticate olan Kullanıcı Id @Model.AuthenticatedUserId</p>
+
+<a asp-controller="Users" asp-action="ChangeRefreshToken">Change Token</a>
+
+
+<h3>Claims (Kimliği doğrulanan kullanıcıya ait bilgiler)</h3>
+<ul>
+    @foreach (var item in Model.Claims)
+    {
+        <li>@item.Type : @item.Value</li>
+    }
+</ul>
+
+<h3>Properties (Identity Server üzerinden kimlik doğrulandıktan sonra okunan bilgiler)</h3>
+<ul>
+    @foreach (var item in Model.Properties)
+    {
+        <li>@item.Key : @item.Value</li>
+    }
+</ul>

@@ -29,6 +29,7 @@ namespace API1
         {
 
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API1", Version = "v1" });
@@ -36,19 +37,26 @@ namespace API1
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
-                opt.Authority = "https://localhost:5001/"; // JSON Web token yayýnlayan kim
-                opt.Audience = "api1"; // Data istediðinde bulunacak olan api kim Identity server üzerindeki resource api veririz. JSON web token audience propertysinde bu alan kesinlikle bulunmadýr. Hedef kitlem. ekstra bir güvenlik olarak kullanýyoruz.
-            }); // Identity üzerinden doðrulamak için yeterli
-
-            services.AddAuthorization(opt =>
-            {
-                // yetkimiz yoksa 403 döner.
-                opt.AddPolicy("read", policy => policy.RequireClaim("scope","api1.read"));
+                opt.Authority = "https://localhost:5001/"; 
+                opt.Audience = "api1";
+                opt.SaveToken = true;
             });
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            services.AddHttpClient("IdentityServer", opt => {
+
+                opt.BaseAddress = new Uri(Configuration["ApiUrls:IdentityServer"]);
+                opt.DefaultRequestHeaders.Add("User-Agent", "ApiClient");
+            });
+
+
+
+            services.AddAuthorization(options => options.AddPolicy("CountryClaim", policy => policy.RequireClaim("country", "türkiye")));
+       
+
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

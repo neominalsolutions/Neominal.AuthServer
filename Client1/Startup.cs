@@ -41,29 +41,28 @@ namespace Client1
             }).AddCookie("MVCIdentityScheme").AddOpenIdConnect("IdentityServerScheme", opt =>
             {
 
-                opt.SignInScheme = "MVCIdentityScheme"; // Identity server üzerinden kimliði doðrulanan kullanýcýnýn cookie bilgisi
+                opt.SignInScheme = "MVCIdentityScheme"; 
                 opt.Authority = Configuration["ApiUrls:IdentityServer"];
-                opt.ClientId = "MvcClient1"; // Identity serverde client app için tanýmladýðýmýz isim
-                opt.ClientSecret = "x-secret"; // Identity serverde client için tanýmladýðýmýz key
-                opt.ResponseType = "code id_token"; // Identity serverdan istencek response type, authorization code va identity token doðru bir saðlayýcýdan bu kimlik bilgilerini aldýðýmýza dair ayar için kullanýyoruz. hibrit bir akýþ sunuyor.
-                opt.GetClaimsFromUserInfoEndpoint = true; // otomatik olarak user-profile ile ilgili claim içerisibe gönmüþ olduk. Yoksa UserInfoEndpoint üzerinden Access token gönderirerek Identity Server üzerinden user profile bilgilerine ulaþabiliriz.
-                opt.SaveTokens = true; // uygulama scope access token ve refresh tokenlarý kaydetmek istersek bu özelliði true yaparýz.
-                // Default false olarak ayarlanmýþtýr.
-                opt.Scope.Add("api1.read"); // api read izni ver. Client için tanýmlanmýþ yetkileri identity serverde allowedscope verirken buradan da client hangi izinlere (yetkilere) sahip olamasý istedeðini seçiyoruz.
-                opt.Scope.Add("offline_access"); // Refresh Token isteðini aktif hale getirdik.
+                opt.ClientId = "MvcClient1"; 
+                opt.ClientSecret = "x-secret"; 
+                opt.ResponseType = "code id_token"; 
+                opt.SaveTokens = true; 
+
+                opt.Scope.Add("GET");
+                opt.Scope.Add("offline_access"); 
                 opt.Scope.Add("CountryAndCity");
-                opt.Scope.Add("Roles"); // buraya Identity Resource ekliyoruz. User Claim deðil (userclaim :role)
-                // custom claim oluþturma iþlemi
-                // custom claimleri maplememiz lazým
-                // custom Resource Identity Tanýmý
+                opt.Scope.Add("Roles");
+                opt.Scope.Add("RoleClaims");
+                opt.ClaimActions.MapJsonKey("ProductControllerRequest", "ProductControllerRequest");
+                opt.ClaimActions.MapJsonKey("WeatherControllerRequest", "WeatherControllerRequest");
                 opt.ClaimActions.MapUniqueJsonKey("country", "country");
                 opt.ClaimActions.MapUniqueJsonKey("city", "city");
-                opt.ClaimActions.MapUniqueJsonKey("role", "role"); // burada ise Identity Resource üzerinden user claim veriyoruz.
+                opt.ClaimActions.MapUniqueJsonKey("role", "role"); 
 
 
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    RoleClaimType = "role" // user-claim veriyoruz
+                    RoleClaimType = "role" 
                 };
 
 

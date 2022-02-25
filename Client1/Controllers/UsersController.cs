@@ -48,12 +48,9 @@ namespace Client1.Controllers
         [Authorize(Roles ="manager")]
         public async Task<IActionResult> ChangeRefreshToken()
         {
-            // identity server refresh token endpointi bulduk
+          
             var discovery = await _identityServer.GetDiscoveryDocumentAsync(_identityServer.BaseAddress.AbsoluteUri);
 
-            // refresh token HttpContext.GetTokenAsync ile alabiliriz.
-
-            // cookiedeki refresh token bilgimizi okuduk
             var refreshToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
 
             var requestToken = new RefreshTokenRequest();
@@ -62,7 +59,6 @@ namespace Client1.Controllers
             requestToken.ClientSecret = _configuration["Client1:ClientSecret"];
             requestToken.RefreshToken = refreshToken;
 
-            // yeni bir refresh token isteğinde bulunduk
             var tokenResult = await _identityServer.RequestRefreshTokenAsync(requestToken);
 
             if (tokenResult.IsError)
@@ -83,9 +79,6 @@ namespace Client1.Controllers
             var properties = authResult.Properties;
 
             properties.StoreTokens(tokens);
-
-            // ilgili şemaya yeniden signIn oluyoruz. değişen token bilgileri ile bu bilgiler zaten HttpContext properties üzerinden geliyor.
-            // kullanıcıyı yeniden oturum açtırdık
             await HttpContext.SignInAsync("MVCIdentityScheme", authResult.Principal, properties);
 
             return Redirect("/users");
