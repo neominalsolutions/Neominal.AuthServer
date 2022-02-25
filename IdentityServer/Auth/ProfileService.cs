@@ -12,6 +12,8 @@ namespace IdentityServer.Auth
     {
         public Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
+            // _userManager.GetClaimsAsync(user),
+            // context.Subject.Identity.Name // authenticated user
 
             var Claims = new List<Claim>
                     {
@@ -25,8 +27,8 @@ namespace IdentityServer.Auth
                         new Claim("WeatherControllerRequest","WeatherControllerRequest")
                     };
 
-            //context.AddRequestedClaims(context.Subject.Claims);
-            //context.IssuedClaims.AddRange(Claims);
+            context.AddRequestedClaims(Claims);
+            //context.IssuedClaims.AddRange(Claims); // accessToken içerisine claim göm
 
             return Task.FromResult(0);
         }

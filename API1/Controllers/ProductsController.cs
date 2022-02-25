@@ -13,7 +13,8 @@ namespace API1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
+    //[Authorize("ProductControllerRequest")]
     public class ProductsController : ControllerBase
     {
         
@@ -22,11 +23,13 @@ namespace API1.Controllers
         [HttpGet("test")]
 
         //[TypeFilter(typeof(RoleClaimAttribute),
-        //    Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
+        //    Arguments = new object[] { "ABCRequest", "ProductControllerRequest" })]
 
 
         [TypeFilter(typeof(RoleClaimCustomerInfoAttribute),
-            Arguments = new object[] { "ABCRequest", "ABCRequest" })]
+            Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
+
+
         public async Task<IActionResult> Test()
         {
            

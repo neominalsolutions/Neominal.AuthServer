@@ -51,9 +51,10 @@ namespace API1
 
 
             services.AddAuthorization(options => options.AddPolicy("CountryClaim", policy => policy.RequireClaim("country", "türkiye")));
-       
+            services.AddAuthorization(options => options.AddPolicy("GETACCESS", policy => policy.RequireClaim("scope", "GET")));
 
-    }
+
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

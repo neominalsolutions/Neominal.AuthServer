@@ -31,7 +31,7 @@ namespace IdentityServer
                 .AddInMemoryClients(AuthConfig.GetClients())
                 .AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
                 .AddTestUsers(AuthConfig.GetUsers().ToList())
-                //.AddProfileService<ProfileService>()
+                .AddProfileService<ProfileService>()
 
                 .AddDeveloperSigningCredential(); 
 
