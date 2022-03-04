@@ -50,6 +50,8 @@ namespace API1
 
 
 
+
+
             services.AddAuthorization(options => options.AddPolicy("CountryClaim", policy => policy.RequireClaim("country", "türkiye")));
             services.AddAuthorization(options => options.AddPolicy("GETACCESS", policy => policy.RequireClaim("scope", "GET")));
 

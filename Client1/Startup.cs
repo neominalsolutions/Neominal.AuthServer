@@ -66,7 +66,25 @@ namespace Client1
                 };
 
 
+            }).AddCookie("ClientCredentialsScheme").AddOpenIdConnect(opt => {
+
+                opt.SignInScheme = "MVCIdentityScheme";
+                opt.Authority = Configuration["ApiUrls:IdentityServer"];
+                opt.ClientId = "MVCClientCredential";
+                opt.ClientSecret = "secret";
+                opt.ResponseType = "code token";
+                opt.SaveTokens = true;
+
+
             });
+
+
+          
+
+
+
+
+
             services.AddHttpClient("IdentityServer", opt => {
 
                 opt.BaseAddress = new Uri(Configuration["ApiUrls:IdentityServer"]);

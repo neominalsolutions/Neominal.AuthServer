@@ -24,6 +24,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="List">Products</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ClientCredential" asp-action="Index">ClientCredentials</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ClientCredential" asp-action="CallApi">Call Api With ClientCredential</a>
+                        </li>
+
+                        
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">

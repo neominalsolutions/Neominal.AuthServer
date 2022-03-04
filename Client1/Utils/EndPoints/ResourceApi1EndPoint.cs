@@ -8,5 +8,6 @@ namespace Client1.Utils.EndPoints
     public class ResourceApi1EndPoint
     {
         public const string ProductUrl = "https://localhost:5003/api/products/list";
+        public const string  WeatherForecastUrl = "https://localhost:5003/WeatherForecast";
     }
 }

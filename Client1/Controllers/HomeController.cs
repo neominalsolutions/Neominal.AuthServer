@@ -29,7 +29,20 @@ namespace Client1.Controllers
             _configuration = configuration;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "ClientCredentialsScheme")]
+        public async Task<IActionResult> GetClientCredentialToken()
+        {
+            var result = await HttpContext.AuthenticateAsync("ClientCredentialsScheme");
+            var accessToken = await HttpContext.GetTokenAsync("ClientCredentialsScheme", "AccessToken");
+
+
+
+            return View();
+
+        }
+
+
+        [Authorize(AuthenticationSchemes = "IdentityServerScheme")]
         public async Task<IActionResult> Index()
         {
             var result = await HttpContext.AuthenticateAsync("IdentityServerScheme");

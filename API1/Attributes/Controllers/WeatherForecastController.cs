@@ -10,6 +10,7 @@ namespace API1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize("GETACCESS")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -24,7 +25,7 @@ namespace API1.Controllers
             _logger = logger;
         }
 
-        [HttpGet][Authorize(Policy ="read")]
+        [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

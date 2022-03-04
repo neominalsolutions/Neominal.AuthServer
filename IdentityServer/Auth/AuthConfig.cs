@@ -40,6 +40,16 @@ namespace IdentityServer.Auth
             return new List<Client> {
                 new Client
                 {
+                    ClientName = "MVCClientCredential1 App",
+                    ClientId = "MVCClientCredential",
+                     ClientSecrets =  new[] {
+                    new Secret("secret".Sha256())
+                    },
+                       AllowedGrantTypes = GrantTypes.ClientCredentials, 
+                    AllowedScopes = {"GET"},
+                },
+                new Client
+                {
                     RequirePkce = false, 
                     ClientName = "MvcClient1 App",
                     ClientId="MvcClient1",

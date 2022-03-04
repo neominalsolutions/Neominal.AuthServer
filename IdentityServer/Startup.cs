@@ -35,6 +35,8 @@ namespace IdentityServer
 
                 .AddDeveloperSigningCredential(); 
 
+          
+
             services.AddControllersWithViews();
         }
 
