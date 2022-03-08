@@ -55,6 +55,10 @@ namespace API1.Attributes
                     await Task.CompletedTask;
                     
                 }
+                else
+                {
+                    await next();
+                }
             }
             else
             {

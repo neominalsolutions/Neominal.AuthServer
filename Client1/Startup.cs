@@ -41,45 +41,50 @@ namespace Client1
             }).AddCookie("MVCIdentityScheme").AddOpenIdConnect("IdentityServerScheme", opt =>
             {
 
-                opt.SignInScheme = "MVCIdentityScheme"; 
+                opt.SignInScheme = "MVCIdentityScheme";
                 opt.Authority = Configuration["ApiUrls:IdentityServer"];
-                opt.ClientId = "MvcClient1"; 
-                opt.ClientSecret = "x-secret"; 
-                opt.ResponseType = "code id_token"; 
-                opt.SaveTokens = true; 
+                opt.ClientId = "MvcClient1";
+                opt.ClientSecret = "x-secret";
+                opt.ResponseType = "code id_token";
+                opt.SaveTokens = true;
 
                 opt.Scope.Add("GET");
-                opt.Scope.Add("offline_access"); 
+                opt.Scope.Add("offline_access");
                 opt.Scope.Add("CountryAndCity");
                 opt.Scope.Add("Roles");
                 opt.Scope.Add("RoleClaims");
-                opt.ClaimActions.MapJsonKey("ProductControllerRequest", "ProductControllerRequest");
-                opt.ClaimActions.MapJsonKey("WeatherControllerRequest", "WeatherControllerRequest");
-                opt.ClaimActions.MapUniqueJsonKey("country", "country");
-                opt.ClaimActions.MapUniqueJsonKey("city", "city");
-                opt.ClaimActions.MapUniqueJsonKey("role", "role"); 
+                // role dýþýnda 
+                //opt.ClaimActions.MapJsonKey("ProductControllerRequest", "ProductControllerRequest");
+                //opt.ClaimActions.MapJsonKey("WeatherControllerRequest", "WeatherControllerRequest");
+                //opt.ClaimActions.MapUniqueJsonKey("country", "country");
+                //opt.ClaimActions.MapUniqueJsonKey("city", "city");
+                //opt.ClaimActions.MapUniqueJsonKey("role", "role");
 
 
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    RoleClaimType = "role" 
+                    RoleClaimType = "role",
+                    NameClaimType = "name"
+                   
                 };
-
-
-            }).AddCookie("ClientCredentialsScheme").AddOpenIdConnect(opt => {
-
-                opt.SignInScheme = "MVCIdentityScheme";
-                opt.Authority = Configuration["ApiUrls:IdentityServer"];
-                opt.ClientId = "MVCClientCredential";
-                opt.ClientSecret = "secret";
-                opt.ResponseType = "code token";
-                opt.SaveTokens = true;
 
 
             });
 
 
-          
+
+            //.AddCookie("ClientCredentialsScheme").AddOpenIdConnect(opt => {
+
+            //     opt.SignInScheme = "ClientCredentialsScheme";
+            //     opt.Authority = Configuration["ApiUrls:IdentityServer"];
+            //     opt.ClientId = "MVCClientCredential";
+            //     opt.ClientSecret = "secret";
+            //     opt.ResponseType = "code token";
+            //     opt.SaveTokens = true;
+
+
+            // });
+
 
 
 

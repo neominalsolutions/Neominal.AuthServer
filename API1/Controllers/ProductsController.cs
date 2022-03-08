@@ -20,30 +20,12 @@ namespace API1.Controllers
         
 
 
-        [HttpGet("test")]
-
-        //[TypeFilter(typeof(RoleClaimAttribute),
-        //    Arguments = new object[] { "ABCRequest", "ProductControllerRequest" })]
-
-
         [TypeFilter(typeof(RoleClaimCustomerInfoAttribute),
-            Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
-
-
-        public async Task<IActionResult> Test()
-        {
-           
-
-
-            return Ok();
-        }
-
-
-        [Authorize("CountryClaim")]
+          Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
         [HttpGet("list")]
         public IActionResult GetProducts()
         {
-           
+
 
             var model = new List<ProductDto>
             {

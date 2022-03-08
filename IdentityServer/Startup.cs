@@ -2,12 +2,14 @@ using IdentityServer.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace IdentityServer
@@ -25,11 +27,22 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var assemblyName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+      
+
             services.AddIdentityServer()
-                .AddInMemoryApiResources(AuthConfig.GetApiResources())
-                .AddInMemoryApiScopes(AuthConfig.GetApiScopes())
-                .AddInMemoryClients(AuthConfig.GetClients())
-                .AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
+                .AddConfigurationStore(opt => {
+                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"),sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                })
+                .AddOperationalStore(opt =>
+                {
+                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                })
+                //.AddInMemoryApiResources(AuthConfig.GetApiResources())
+                //.AddInMemoryApiScopes(AuthConfig.GetApiScopes())
+                //.AddInMemoryClients(AuthConfig.GetClients())
+                //.AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
                 .AddTestUsers(AuthConfig.GetUsers().ToList())
                 .AddProfileService<ProfileService>()
 

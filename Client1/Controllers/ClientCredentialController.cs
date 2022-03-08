@@ -34,7 +34,7 @@ namespace Client1.Controllers
         public async Task<IActionResult> CallApi()
         {
            
-            var accessToken = await HttpContext.GetTokenAsync("ClientCredentialsScheme", "AccessToken");
+            var accessToken = await HttpContext.GetTokenAsync("ClientCredentialsScheme", "access_token");
             _resourceApi1.SetBearerToken(accessToken);
             var result = await _resourceApi1.GetAsync(ResourceApi1EndPoint.WeatherForecastUrl);
 

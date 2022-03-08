@@ -104,6 +104,7 @@ namespace IdentityServer.Auth
                 },
                 new IdentityResource() {Name= "RoleClaims", Description = "Role Claims", UserClaims = { "ProductControllerRequest", "WeatherControllerRequest" }
                 }
+                // identity resource içerisinde tüm RoleClaimsleri dışarı çıkarmamız lazım. Ne kadar sistemde permission varsa buraya atacağız
             };
 
         }
