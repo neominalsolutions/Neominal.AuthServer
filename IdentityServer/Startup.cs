@@ -30,6 +30,7 @@ namespace IdentityServer
             var assemblyName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
       
+            //services.AddIdentity<ApplicationUser,ApplicationRole>().AddTokenProvider()
 
             services.AddIdentityServer()
                 .AddConfigurationStore(opt => {

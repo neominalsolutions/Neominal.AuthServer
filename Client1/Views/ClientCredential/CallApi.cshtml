@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+
+
+
+@model List<WeatherForecastDto>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.Date.ToShortDateString()</li>
+        <li>@item.Summary</li>
+        <li>@item.TemperatureC</li>
+        <li>@item.TemperatureF</li>
+    }
+</ul>

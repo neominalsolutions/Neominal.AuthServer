@@ -42,7 +42,7 @@ namespace Client1.Controllers
             {
                 var response = await result.Content.ReadAsStringAsync();
 
-                var data = JsonConvert.DeserializeObject<List<ProductViewModel>>(response);
+                var data = JsonConvert.DeserializeObject<List<WeatherForecastDto>>(response);
 
                 return View(data);
             }
@@ -73,7 +73,7 @@ namespace Client1.Controllers
             var tokens = new List<AuthenticationToken>
             {
                
-                new AuthenticationToken { Name = "AccessToken", Value = accessTokenResult.AccessToken },
+                new AuthenticationToken { Name = "access_token", Value = accessTokenResult.AccessToken },
                 new AuthenticationToken { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.UtcNow.AddSeconds(accessTokenResult.ExpiresIn).ToString("O") },
             };
 

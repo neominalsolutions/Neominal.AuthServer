@@ -34,6 +34,7 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly UserManager<>
 
         public AccountController(
             IIdentityServerInteractionService interaction,

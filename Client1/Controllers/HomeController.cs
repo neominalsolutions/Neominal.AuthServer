@@ -33,7 +33,7 @@ namespace Client1.Controllers
         public async Task<IActionResult> GetClientCredentialToken()
         {
             var result = await HttpContext.AuthenticateAsync("ClientCredentialsScheme");
-            var accessToken = await HttpContext.GetTokenAsync("ClientCredentialsScheme", "AccessToken");
+            var accessToken = await HttpContext.GetTokenAsync("ClientCredentialsScheme", "access_token");
 
 
 
