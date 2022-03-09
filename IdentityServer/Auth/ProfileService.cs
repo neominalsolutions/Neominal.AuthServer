@@ -23,8 +23,8 @@ namespace IdentityServer.Auth
                         new Claim("country","türkiye"),
                         new Claim("city","istanbul"),
                         new Claim("role","admin"),
-                        new Claim("ProductControllerRequest","ProductControllerRequest"),
-                        new Claim("WeatherControllerRequest","WeatherControllerRequest")
+                        new Claim("permission1","Api1.Products.GetProducts"),
+                        new Claim("permission2","Api1.Products.PostProducts")
                     };
 
             context.AddRequestedClaims(Claims);

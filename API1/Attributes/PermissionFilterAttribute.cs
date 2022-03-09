@@ -13,16 +13,14 @@ using System.Threading.Tasks;
 
 namespace API1.Attributes
 {
-    public class RoleClaimCustomerInfoAttribute: IAsyncActionFilter
+    public class PermissionFilterAttribute: IAsyncActionFilter
     {
-        private string _claimType;
         private string _claimValue;
         private readonly HttpClient _identityServer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoleClaimCustomerInfoAttribute(string claimType,string claimValue,IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
+        public PermissionFilterAttribute(string claimValue,IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
         {
-            _claimType = claimType;
             _claimValue = claimValue;
             _identityServer = httpClientFactory.CreateClient("IdentityServer");
             _httpContextAccessor = httpContextAccessor;
@@ -47,7 +45,7 @@ namespace API1.Attributes
 
             if (authResult.Succeeded)
             {
-                var claim = response.Claims.FirstOrDefault(x => x.Type == this._claimType && x.Value == this._claimValue);
+                var claim = response.Claims.FirstOrDefault(x => x.Value == this._claimValue);
 
                 if (claim == null)
                 {

@@ -1,4 +1,6 @@
+using API1.AuthorizationHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,11 +51,24 @@ namespace API1
             });
 
 
+            services.AddSingleton<IAuthorizationHandler, PermissonRequirementHandler>();
 
 
 
             //services.AddAuthorization(options => options.AddPolicy("CountryClaim", policy => policy.RequireClaim("country", "türkiye")));
             services.AddAuthorization(options => options.AddPolicy("GETACCESS", policy => policy.RequireClaim("scope", "GET")));
+
+            //services.AddAuthorization(opt => opt.AddPolicy("PermissionPolicy", policy => policy.AddRequirements(new PermissionRequirement(apiName:"Api1"))));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PermissionPolicy",
+                    policyBuilder =>
+                        policyBuilder.AddRequirements(
+                          new PermissionRequirement(apiName: "Api1")
+                        ));
+            });
+
 
 
         }

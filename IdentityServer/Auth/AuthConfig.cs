@@ -102,8 +102,8 @@ namespace IdentityServer.Auth
                 new IdentityResource(){ Name="CountryAndCity", Description="şehir ve ülke bilgisi", DisplayName="CountryAndCity", UserClaims = {"country","city" } },
                 new IdentityResource() {Name  ="Roles", Description="User Role", UserClaims= {"role"}
                 },
-                new IdentityResource() {Name= "RoleClaims", Description = "Role Claims", UserClaims = { "ProductControllerRequest", "WeatherControllerRequest" }
-                }
+                new IdentityResource() {Name= "RoleClaims", Description = "RoleClaims", UserClaims= { "permission1","permission2" } },
+                
                 // identity resource içerisinde tüm RoleClaimsleri dışarı çıkarmamız lazım. Ne kadar sistemde permission varsa buraya atacağız
             };
 
@@ -126,8 +126,7 @@ namespace IdentityServer.Auth
                         new Claim("country","türkiye"),
                         new Claim("city","istanbul"),
                         new Claim("role","admin"),
-                        new Claim("ProductControllerRequest","ProductControllerRequest"),
-                        new Claim("WeatherControllerRequest","WeatherControllerRequest")
+                        new Claim("permission","Api1.Products.GetProducts")
                     }
                 },
                  new TestUser

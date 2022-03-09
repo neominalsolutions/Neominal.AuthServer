@@ -54,11 +54,13 @@ namespace Client1
                 opt.Scope.Add("Roles");
                 opt.Scope.Add("RoleClaims");
                 // role dýþýnda 
-                //opt.ClaimActions.MapJsonKey("ProductControllerRequest", "ProductControllerRequest");
+                //opt.ClaimActions.MapJsonKey("permission", "Api1.Products.GetProducts");
                 //opt.ClaimActions.MapJsonKey("WeatherControllerRequest", "WeatherControllerRequest");
                 //opt.ClaimActions.MapUniqueJsonKey("country", "country");
                 //opt.ClaimActions.MapUniqueJsonKey("city", "city");
                 //opt.ClaimActions.MapUniqueJsonKey("role", "role");
+
+                //opt.ClaimActions.MapUniqueJsonKey("permission", "permission");
 
 
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters

@@ -33,17 +33,18 @@ namespace IdentityServer
             //services.AddIdentity<ApplicationUser,ApplicationRole>().AddTokenProvider()
 
             services.AddIdentityServer()
-                .AddConfigurationStore(opt => {
-                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"),sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
-                })
-                .AddOperationalStore(opt =>
-                {
-                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
-                })
-                //.AddInMemoryApiResources(AuthConfig.GetApiResources())
-                //.AddInMemoryApiScopes(AuthConfig.GetApiScopes())
-                //.AddInMemoryClients(AuthConfig.GetClients())
-                //.AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
+                //.AddConfigurationStore(opt =>
+                //{
+                //    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                //})
+                //.AddOperationalStore(opt =>
+                //{
+                //    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                //})
+                .AddInMemoryApiResources(AuthConfig.GetApiResources())
+                .AddInMemoryApiScopes(AuthConfig.GetApiScopes())
+                .AddInMemoryClients(AuthConfig.GetClients())
+                .AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
                 .AddTestUsers(AuthConfig.GetUsers().ToList())
                 .AddProfileService<ProfileService>()
 

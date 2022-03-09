@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,14 +15,18 @@ namespace API1.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    //[Authorize("ProductControllerRequest")]
     public class ProductsController : ControllerBase
     {
-        
 
 
-        [TypeFilter(typeof(RoleClaimCustomerInfoAttribute),
-          Arguments = new object[] { "ProductControllerRequest", "ProductControllerRequest" })]
+
+        //[TypeFilter(typeof(PermissionFilterAttribute),
+        //  Arguments = new object[] { "update-profile" })]
+
+
+
+
+        [Authorize(Policy ="PermissionPolicy")]
         [HttpGet("list")]
         public IActionResult GetProducts()
         {

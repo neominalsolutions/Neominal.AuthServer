@@ -17,13 +17,13 @@ namespace IdentityServer
         {
             var host = CreateHostBuilder(args).Build();
 
-            using (var serviceScope = host.Services.CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            //using (var serviceScope = host.Services.CreateScope())
+            //{
+            //    var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-                Auth.IdentitySeed.Seed(context);
-            }
-            
+            //    Auth.IdentitySeed.Seed(context);
+            //}
+
             host.Run();
         }
 
