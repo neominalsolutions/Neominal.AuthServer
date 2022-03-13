@@ -1,3 +1,4 @@
+using IdentityServer.EF;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +18,12 @@ namespace IdentityServer
         {
             var host = CreateHostBuilder(args).Build();
 
-            //using (var serviceScope = host.Services.CreateScope())
-            //{
-            //    var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            using (var serviceScope = host.Services.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-            //    Auth.IdentitySeed.Seed(context);
-            //}
+                IdentitySeed.Seed(context);
+            }
 
             host.Run();
         }

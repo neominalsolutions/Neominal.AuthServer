@@ -20,7 +20,8 @@ namespace IdentityServer.Auth
                     Scopes = { "GET", "POST","PUT","DELETE" },
                     ApiSecrets = new[]{new Secret("secretapi1".Sha256()) },
                    
-                }
+                },
+                new ApiResource(IdentityServerConstants.LocalApi.ScopeName) // Identity Server Api erişmek için tanımladık
             };
         }
 
@@ -30,7 +31,8 @@ namespace IdentityServer.Auth
                 new ApiScope("GET", "PUT Access"),
                 new ApiScope("POST", "POST Access"),
                   new ApiScope("PUT", "PUT Access"),
-                   new ApiScope("DELETE", "DELETE Access")
+                   new ApiScope("DELETE", "DELETE Access"),
+                   new ApiScope(IdentityServerConstants.LocalApi.ScopeName,"Identity Server API Access")
 
             };
         }
@@ -57,9 +59,9 @@ namespace IdentityServer.Auth
                     new Secret("x-secret".Sha256()) 
                     },
                     PostLogoutRedirectUris = new List<string> { "https://localhost:5004/signout-callback-oidc" }, // Default bir redirect uri
-                    AllowedGrantTypes = GrantTypes.Hybrid, // code id_token istedeiğimiz için
+                    AllowedGrantTypes = GrantTypes.Hybrid, // code id_token.
                     AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile
-                    , IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity","Roles","RoleClaims","GET"}, 
+                    , IdentityServerConstants.StandardScopes.OfflineAccess, "CountryAndCity","Roles","RoleClaims","GET"},
                     RedirectUris = new List<string>{ "https://localhost:5004/signin-oidc" },
                     AllowOfflineAccess = true, 
                    AccessTokenLifetime =(int)(DateTime.Now.AddHours(2)- DateTime.Now).TotalSeconds, // Default 1 saat
@@ -102,7 +104,7 @@ namespace IdentityServer.Auth
                 new IdentityResource(){ Name="CountryAndCity", Description="şehir ve ülke bilgisi", DisplayName="CountryAndCity", UserClaims = {"country","city" } },
                 new IdentityResource() {Name  ="Roles", Description="User Role", UserClaims= {"role"}
                 },
-                new IdentityResource() {Name= "RoleClaims", Description = "RoleClaims", UserClaims= { "permission1","permission2" } },
+                new IdentityResource() {Name= "RoleClaims", Description = "RoleClaims", UserClaims= { "KayıtlanmaPermission" } },
                 
                 // identity resource içerisinde tüm RoleClaimsleri dışarı çıkarmamız lazım. Ne kadar sistemde permission varsa buraya atacağız
             };

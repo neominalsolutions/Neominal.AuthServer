@@ -53,6 +53,7 @@ namespace Client1
                 opt.Scope.Add("CountryAndCity");
                 opt.Scope.Add("Roles");
                 opt.Scope.Add("RoleClaims");
+                //opt.Scope.Add("IdentityServerApi");
                 // role dýþýnda 
                 //opt.ClaimActions.MapJsonKey("permission", "Api1.Products.GetProducts");
                 //opt.ClaimActions.MapJsonKey("WeatherControllerRequest", "WeatherControllerRequest");

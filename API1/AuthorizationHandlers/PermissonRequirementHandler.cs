@@ -43,7 +43,7 @@ namespace API1.AuthorizationHandlers
             string actionName = _httpContextAccessor.HttpContext.Request.RouteValues["action"].ToString();
 
 
-            var claim = response.Claims.FirstOrDefault(x => x.Value == $"{requirement.ApiName}.{controllerName}.{actionName}");
+            var claim = response.Claims.FirstOrDefault(x => x.Type == controllerName && x.Value == actionName);
 
             if (claim == null)
             {

@@ -1,7 +1,9 @@
 using IdentityServer.Auth;
+using IdentityServer.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,30 +31,41 @@ namespace IdentityServer
         {
             var assemblyName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-      
-            //services.AddIdentity<ApplicationUser,ApplicationRole>().AddTokenProvider()
+
+
+
+            services.AddDbContext<EFIdentityDbContext>(opt => {
+                opt.UseSqlServer(Configuration.GetConnectionString("IdentityDbConn"));
+            });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<EFIdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddIdentityServer()
-                //.AddConfigurationStore(opt =>
-                //{
-                //    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
-                //})
-                //.AddOperationalStore(opt =>
-                //{
-                //    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDb"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
-                //})
-                .AddInMemoryApiResources(AuthConfig.GetApiResources())
-                .AddInMemoryApiScopes(AuthConfig.GetApiScopes())
-                .AddInMemoryClients(AuthConfig.GetClients())
-                .AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
-                .AddTestUsers(AuthConfig.GetUsers().ToList())
-                .AddProfileService<ProfileService>()
+                
+                .AddConfigurationStore(opt =>
+                {
+                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDbConn"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                })
+                .AddOperationalStore(opt =>
+                {
+                    opt.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("IdentityDbConn"), sqlOptions => sqlOptions.MigrationsAssembly(assemblyName));
+                })
 
+                //.AddInMemoryApiResources(AuthConfig.GetApiResources())
+                //.AddInMemoryApiScopes(AuthConfig.GetApiScopes())
+                //.AddInMemoryClients(AuthConfig.GetClients())
+                //.AddInMemoryIdentityResources(AuthConfig.GetIdentityResources())
+                //.AddTestUsers(AuthConfig.GetUsers().ToList())
+                //.AddProfileService<ProfileService>()
+                .AddAspNetIdentity<ApplicationUser>()
                 .AddDeveloperSigningCredential(); 
 
           
 
             services.AddControllersWithViews();
+            services.AddLocalApiAuthentication(); //signup iþlemleri için apiden istek almak için kullandýk
+            // farklý bir resource api için bir deniyelim
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

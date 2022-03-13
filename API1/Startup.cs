@@ -65,7 +65,7 @@ namespace API1
                 options.AddPolicy("PermissionPolicy",
                     policyBuilder =>
                         policyBuilder.AddRequirements(
-                          new PermissionRequirement(apiName: "Api1")
+                          new PermissionRequirement()
                         ));
             });
 

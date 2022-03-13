@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Auth
+namespace IdentityServer.EF
 {
-    public class ApplicationRole: IdentityRole
+    public class ApplicationUser: IdentityUser
     {
     }
 }

@@ -1,11 +1,12 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using IdentityServer.Auth;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer.Auth
+namespace IdentityServer.EF
 {
     public static class IdentitySeed
     {
