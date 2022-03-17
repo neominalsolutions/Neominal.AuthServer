@@ -31,9 +31,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="ClientCredential" asp-action="CallApi">Call Api With ClientCredential</a>
                         </li>
 
-                        
+
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Instructors" asp-action="Approve">Instructor Approval</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Instructors" asp-action="Create">Instructor Create</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Instructors" asp-action="Deny">Instructor Deny</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Oturumu Kapat</a>
                             </li>

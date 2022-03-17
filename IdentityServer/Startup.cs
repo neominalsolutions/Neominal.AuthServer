@@ -64,7 +64,7 @@ namespace IdentityServer
           
 
             services.AddControllersWithViews();
-            services.AddLocalApiAuthentication(); //signup iþlemleri için apiden istek almak için kullandýk
+            //services.AddLocalApiAuthentication(); //signup iþlemleri için apiden istek almak için kullandýk
             // farklý bir resource api için bir deniyelim
         }
 

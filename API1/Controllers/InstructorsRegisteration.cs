@@ -18,21 +18,21 @@ namespace API1.Controllers
     public class InstructorsRegisteration : ControllerBase
     {
 
-        [HttpPost("approval")]
+        [HttpGet("approval")]
         public IActionResult Approval()
         {
             return Ok("Approved");
         }
 
 
-        [HttpPost("create")]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return Ok("Created");
         }
 
 
-        [HttpPost("deny")]
+        [HttpGet("deny")]
         public IActionResult Deny()
         {
             return Ok("Created");
